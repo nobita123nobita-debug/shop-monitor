@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 import os
 import json
 import hashlib
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-TARGET_URL = "https://onlineshop.55mth.com/"
+TARGET_URL = "https://official-goods-store.jp/55mth/"
 SNAPSHOT_FILE = "shop_snapshot.json"
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK_URL")
 
@@ -54,7 +54,7 @@ def send_discord_notification(message, changed_details=None):
         return
 
     embed = {
-        "title": "🚨 Shop Change Detected",
+        "title": "?? Shop Change Detected",
         "description": message,
         "color": 15105570,
         "timestamp": datetime.now().isoformat(),
@@ -99,13 +99,13 @@ def check_shop():
     if last_snapshot is None:
         print("First run - saving snapshot.")
         save_snapshot(current_hash)
-        send_discord_notification("✅ Shop monitor started - baseline snapshot saved.")
+        send_discord_notification("? Shop monitor started - baseline snapshot saved.")
         return
 
     if current_hash == last_snapshot["hash"]:
-        print("✓ No changes detected.")
+        print("? No changes detected.")
     else:
-        print("⚠ Changes detected!")
+        print("? Changes detected!")
         save_snapshot(current_hash)
 
         last_time = last_snapshot["timestamp"]

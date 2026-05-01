@@ -23,7 +23,7 @@ class ShopMonitorApp:
         # URL??
         ttk.Label(root, text="????URL:").grid(row=0, column=0, padx=10, pady=10, sticky="w")
         self.url_entry = ttk.Entry(root, width=50)
-        self.url_entry.insert(0, "https://onlineshop.55mth.com/")
+        self.url_entry.insert(0, "https://official-goods-store.jp/55mth/")
         self.url_entry.grid(row=0, column=1, padx=10, pady=10)
 
         # ??????1

@@ -17,3 +17,9 @@ jobs:
       - run: python shop_monitor.py
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: Send error notification
+        if: failure()
+        run: |
+          curl -X POST ${{ secrets.DISCORD_WEBHOOK_URL }} \
+            -H "Content-Type: application/json" \
+            -d "{\"embeds\":[{\"title\":\"❌ エラー発生\",\"description\":\"ショップ監視でエラーが発生しました\",\"color\":16711680}]}"

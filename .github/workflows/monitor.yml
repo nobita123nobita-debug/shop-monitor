@@ -2,9 +2,11 @@ name: Shop Monitor
 
 on:
   schedule:
-    - cron: '0 11 * * *'   # フォールバック（遅延しても一応動く）
+    - cron: '0 11 * * *'
   repository_dispatch:
-    types: [run-monitor]   # ← 外部トリガーを追加
+    types: [run-monitor]
+  workflow_dispatch:        # ← これを追加
+
 
 jobs:
   monitor:

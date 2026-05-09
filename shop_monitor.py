@@ -63,7 +63,7 @@ def send_discord_notification(message, changed_details=None):
         return
 
     embed = {
-        "title": "?? Shop Change Detected",
+        "title": "\U0001f6a8 Shop Change Detected",
         "description": message,
         "color": 15105570,
         "timestamp": datetime.now().isoformat(),
@@ -108,13 +108,13 @@ def check_shop():
     if last_snapshot is None:
         print("First run - saving snapshot.")
         save_snapshot(current_hash)
-        send_discord_notification("? Shop monitor started - baseline snapshot saved.")
+        send_discord_notification("✅ Shop monitor started - baseline snapshot saved.")
         return
 
     if current_hash == last_snapshot["hash"]:
-        print("? No changes detected.")
+        print("✅ No changes detected.")
     else:
-        print("? Changes detected!")
+        print("⚠️ Changes detected!")
         save_snapshot(current_hash)
 
         last_time = last_snapshot["timestamp"]

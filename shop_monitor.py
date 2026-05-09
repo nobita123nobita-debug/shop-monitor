@@ -6,6 +6,7 @@ import requests
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
+from bs4 import BeautifulSoup
 
 load_dotenv()
 
@@ -23,7 +24,15 @@ def get_page_hash():
         response = requests.get(TARGET_URL, headers=headers, timeout=10)
         response.raise_for_status()
         content = response.text
-        return hashlib.sha256(content.encode()).hexdigest(), content
+
+        # Remove dynamic elements (scripts, styles, meta) before hashing
+        # to avoid false positives from session tokens / timestamps in HTML
+        soup = BeautifulSoup(content, "html.parser")
+        for tag in soup.find_all(["script", "style", "meta", "noscript", "link"]):
+            tag.decompose()
+        stable_text = soup.get_text(separator="\n", strip=True)
+
+        return hashlib.sha256(stable_text.encode()).hexdigest(), content
     except requests.RequestException as e:
         print(f"Error fetching {TARGET_URL}: {e}")
         return None, None
